@@ -1,0 +1,261 @@
+[
+  {
+    "id": "block1",
+    "name": "Bosh sahifa",
+    "includeInMenu": false,
+    "includeInBottom": false,
+    "text1": "Salom, men",
+    "text2": "Najmiddin <br>Nurmuhamedov",
+    "text3": "professional UX/UI dizaynerman. Shuningdek, NJ Design studiyasi asoschisiman. Ushbu vebsayt orqali men yaratgan dizayn ishlarimni ko'rishingiz va ular orqali mening yondashuvim bilan tanishishingiz mumkin."
+  },
+  {
+    "id": "block2",
+    "name": "Men haqimda",
+    "includeInMenu": true,
+    "includeInBottom": true,
+    "title1": "Men haqimda",
+    "text1_1": "Men vebsaytlar, mobil ilovalar va logotiplar uchun maxsus dizaynlar yarataman. Men tayyorlagan ishlarim individual va o'ziga xos bo'lib, mijozning talab va istaklariga mos ravishda amalga oshiriladi.",
+    "text1_2": "Quyida mening rezyumemni yuklab olishingiz mumkin.",
+    "button1": "<button class=\"Star\" name=\"Gold\" type=\"button\">Yuklab olish</button>",
+    "button1Enabled": true,
+    "title2": "Men foydalanadigan dasturiy vositalar",
+    "text2_1": "Men quyidagi dasturiy ta'minotlardan foydalanib dizaynlar yarataman.",
+    "text2_2": "Dizayn - bu nafaqat vizual ko'rinish, balki foydalanuvchining tasavvuridagi his-tuyg'ular va jarayonlarni ham aks ettiradi. Har bir loyiha o'ziga xos estetik go'zallik, rang uyg'unligi va e'tiborni tortuvchi elementlar bilan ajralib turadi.",
+    "stocks": [
+      {
+        "title": "Figma",
+        "icon": "/uploads/1770193124483-766580377.svg",
+        "enabled": true
+      },
+      {
+        "title": "Adobe XD",
+        "icon": "/uploads/1770196006475-932806743.svg",
+        "enabled": true
+      },
+      {
+        "title": "Adobe Photoshop",
+        "icon": "/uploads/1770196013877-99420846.svg",
+        "enabled": true
+      },
+      {
+        "title": "Adobe After Effects",
+        "icon": "/uploads/1770193149741-29374458.svg",
+        "enabled": true
+      },
+      {
+        "title": "Adobe Illustrator",
+        "icon": "",
+        "enabled": false
+      }
+    ]
+  },
+  {
+    "id": "block3",
+    "name": "Portfolio",
+    "includeInMenu": true,
+    "includeInBottom": true,
+    "title": "Portfolio",
+    "text": "Bu bo'limda siz mening ijodimdan eng yaxshi namunalarni ko'rishingiz mumkin. Ko'rsatilgan barcha dizaynlar mualliflik huquqi bilan himoyalangan.",
+    "tabsEnabled": true,
+    "projects": [
+      {
+        "title": "New Project",
+        "hashtag": "Category",
+        "year": "2025",
+        "description": "Description...",
+        "media": [
+          {
+            "type": "image",
+            "src": "/uploads/1770188314802-485552109.png"
+          }
+        ],
+        "thumbnail": {
+          "type": "image",
+          "src": "/uploads/1770188308224-314395366.png"
+        }
+      },
+      {
+        "title": "OneSimBox Mobile App integrating eSIM and VPN and WiFi",
+        "hashtag": "Vebsayt",
+        "year": "2025",
+        "description": "The design created for the OneSimBox mobile app — an innovative project that integrates eSIM and VPN technologies. It has been crafted to be unique, attractive, and individual.  In this project, the designs for the dashboard, statistical results, connection, QR code scanner, and several other features have been created.  If you need a similar service, place your order right away!",
+        "media": [
+          {
+            "type": "image",
+            "src": "/uploads/1770188324585-783558833.png"
+          }
+        ],
+        "thumbnail": {
+          "type": "image",
+          "src": "/uploads/1770188330040-544474870.png"
+        }
+      },
+      {
+        "title": "New Project",
+        "hashtag": "Category",
+        "year": "2025",
+        "description": "Description...",
+        "media": [],
+        "thumbnail": ""
+      },
+      {
+        "title": "OneSimBox Mobile App integrating eSIM and VPN and WiFi ",
+        "hashtag": "Mobil ilova",
+        "year": "2025",
+        "description": "The design created for the OneSimBox mobile app — an innovative project that integrates eSIM and VPN technologies. It has been crafted to be unique, attractive, and individual.  In this project, the designs for the dashboard, statistical results, connection, QR code scanner, and several other features have been created.  If you need a similar service, place your order right away!",
+        "media": [
+          {
+            "type": "image",
+            "src": "/uploads/1770188338431-605935675.png"
+          }
+        ],
+        "thumbnail": {
+          "type": "image",
+          "src": "/uploads/1770188344414-983585706.png"
+        }
+      },
+      {
+        "title": "New Project",
+        "hashtag": "Category",
+        "year": "2025",
+        "description": "Description...",
+        "media": [],
+        "thumbnail": ""
+      },
+      {
+        "title": "New Project",
+        "hashtag": "Category",
+        "year": "2025",
+        "description": "Description...",
+        "media": [],
+        "thumbnail": ""
+      },
+      {
+        "title": "New Project",
+        "hashtag": "Category",
+        "year": "2025",
+        "description": "Description...",
+        "media": [],
+        "thumbnail": ""
+      }
+    ]
+  },
+  {
+    "id": "block4",
+    "name": "Narxlar",
+    "includeInMenu": true,
+    "includeInBottom": true,
+    "title1": "Narxlar",
+    "image1": "/uploads/1770192430660-481873287.svg",
+    "image1Enabled": true,
+    "text1": "Ko'rsatiladigan xizmatlar uchun narxlar ish hajmi, murakkabligi va ko'lamiga tayangan holda kelishuv asosida amalga oshiriladi. Ishlash shakllari o'zaro kelishuvga muvofiq belgilangan tartibda shartnomaviy, onlayn yoki offlayn tarzda bajarilishi mumkin.",
+    "title2": "MAXSUS TAKLIF!",
+    "text2": "Arzon narxda sifatli dizayn tayyorlatishni istasangiz quyidagi birja platformalaridan biri orqali buyurtma bering. Sizning buyurtmangiz albatta yuqori maqomdagi darajada ko'rib chiqiladi.",
+    "brands": [
+      {
+        "logo": "/uploads/1770192789286-695298070.svg",
+        "link": "<a href=\"https://www.fiverr.com/najmiddin\">https://www.fiverr.com</a>",
+        "logoEnabled": true,
+        "linkEnabled": true
+      },
+      {
+        "logo": "/uploads/1770192799182-188890336.svg",
+        "link": "https://www.upwork.com",
+        "logoEnabled": true,
+        "linkEnabled": true
+      },
+      {
+        "logo": "freelancer.svg",
+        "link": "https://www.freelancer.com",
+        "logoEnabled": false,
+        "linkEnabled": false
+      }
+    ],
+    "image3": "<img src=\"images/exclamation.svg\" size=\"50%\">",
+    "image3Enabled": true,
+    "text3": "Dizayn tayyorlatish albatta ma'lum mablag' talab qiladi, lekin bu ortiqcha hisoblanmaydi. Aksincha, did bilan tayyorlangan dizaynga ega bo'lmagan xar qanday loyiha huddi havodagi chang kabi so'nib ketadi."
+  },
+  {
+    "id": "block5",
+    "name": "Bog'lanish",
+    "includeInMenu": true,
+    "includeInBottom": true,
+    "title1": "Bog'lanish",
+    "text1": "Jonli muloqot uchun aloqa raqami",
+    "phone": "+998 33 141 41 41",
+    "contacts": [
+      {
+        "image": "/uploads/1770192289673-680477898.svg",
+        "title": "<b>Telegram</b> (Profil)",
+        "link": "<a class=\"link\" href=\"https://t.me/nj_uz\">@nj_uz</a>",
+        "description": "istalgan vaqtda murojaat qilishingiz uchun",
+        "imageEnabled": true,
+        "titleEnabled": true,
+        "linkEnabled": true,
+        "descriptionEnabled": true
+      },
+      {
+        "image": "/uploads/1770192281969-436394278.svg",
+        "title": "Gmail",
+        "link": "najmiddin4141@gmail.com",
+        "description": "elektron pochta orqali xabar yuborishingiz uchun",
+        "imageEnabled": true,
+        "titleEnabled": true,
+        "linkEnabled": true,
+        "descriptionEnabled": true
+      },
+      {
+        "image": "/uploads/1770192275181-591470484.svg",
+        "title": "Linkedin",
+        "link": "https://www.linkedin.com/in/najmiddinxuja",
+        "description": "meni va ishlarimni kuzatishingiz uchun",
+        "imageEnabled": true,
+        "titleEnabled": true,
+        "linkEnabled": true,
+        "descriptionEnabled": true
+      },
+      {
+        "image": "/uploads/1770192266560-499063840.svg",
+        "title": "Telegram (Kanal)",
+        "link": "https://t.me/nj_portfolio",
+        "description": "tayyorlagan ishlarimni ko'rishingiz uchun",
+        "imageEnabled": true,
+        "titleEnabled": true,
+        "linkEnabled": true,
+        "descriptionEnabled": true
+      }
+    ]
+  },
+  {
+    "id": "bottom",
+    "name": "BOTTOM SECTION",
+    "includeInMenu": false,
+    "includeInBottom": false,
+    "title1": "NJ Design",
+    "text1": "Najmiddin Nurmuxamedov tomonidan asos solingan",
+    "img1": "/uploads/1770192241730-933864412.svg",
+    "img1Enabled": true,
+    "link1": "<a class=\"link\" href=\"tel:+998331414141\">+998331414141</a>",
+    "link1Enabled": true,
+    "img2": "/uploads/1770192234546-476587483.svg",
+    "img2Enabled": true,
+    "link2": "najmiddin4141@gmail.com",
+    "link2Enabled": true,
+    "img3": "/uploads/1770192228220-935351010.svg",
+    "img3Enabled": true,
+    "link3": "Telegram",
+    "link3Enabled": true,
+    "img4": "/uploads/1770192216631-28024527.svg",
+    "img4Enabled": true,
+    "link4": "Linkedin",
+    "link4Enabled": true,
+    "img5": "facebook.svg",
+    "img5Enabled": false,
+    "link5": "Facebook",
+    "link5Enabled": false,
+    "qrCode": "/uploads/1770191897571-120073731.svg",
+    "qrCodeEnabled": true,
+    "authorText": "© 2025 NJ Design (Najmiddin Nurmuxamedov). Barcha huquqlar himoyalangan.",
+    "authorTextEnabled": true
+  }
+]
