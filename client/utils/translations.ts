@@ -1,4 +1,4 @@
-export type Language = 'uz' | 'en';
+export type Language = 'uz' | 'en' | 'ru';
 
 export const translations = {
   uz: {
@@ -110,6 +110,61 @@ export const translations = {
       thumbnail: "Thumbnail",
       enabled: "Enabled"
     }
+  },
+  ru: {
+    // Navigation
+    nav: {
+      about: "ОБО МНЕ",
+      portfolio: "ПОРТФОЛИО",
+      prices: "ЦЕНЫ",
+      contact: "КОНТАКТ"
+    },
+    // Categories
+    categories: {
+      all: "Все",
+      mobile: "Мобильное приложение",
+      website: "Веб-сайт",
+      logo: "Логотип"
+    },
+    // Buttons
+    buttons: {
+      details: "Подробнее",
+      save: "Сохранить",
+      add: "Добавить",
+      delete: "Удалить",
+      upload: "Загрузить",
+      cancel: "Отмена"
+    },
+    // Admin Panel
+    admin: {
+      title: "Панель администратора",
+      saveChanges: "Сохранить изменения",
+      addProject: "Добавить новый проект",
+      addBrand: "Добавить новый бренд",
+      addContact: "Добавить новый контакт",
+      addFooterLink: "Добавить новую ссылку",
+      deleteProject: "Удалить проект",
+      moveUp: "Переместить вверх",
+      moveDown: "Переместить вниз",
+      changePassword: "Изменить пароль",
+      currentPassword: "Текущий пароль",
+      newPassword: "Новый пароль",
+      confirmPassword: "Подтвердить пароль",
+      updatePassword: "Обновить пароль",
+      logout: "Выйти"
+    },
+    // Form Labels
+    form: {
+      title: "Заголовок",
+      text: "Текст",
+      description: "Описание",
+      image: "Изображение",
+      hashtag: "Название хештега",
+      year: "Год",
+      media: "Медиа",
+      thumbnail: "Миниатюра",
+      enabled: "Включено"
+    }
   }
 };
 
@@ -127,7 +182,7 @@ export const getTranslation = (lang: Language, key: string): string => {
 export const getLanguageFromStorage = (): Language => {
   if (typeof window === 'undefined') return 'uz';
   const stored = localStorage.getItem('language');
-  return (stored === 'en' || stored === 'uz') ? stored : 'uz';
+  return (stored === 'en' || stored === 'uz' || stored === 'ru') ? stored : 'uz';
 };
 
 export const setLanguageToStorage = (lang: Language): void => {

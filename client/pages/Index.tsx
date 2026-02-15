@@ -1,4 +1,4 @@
-import { AnimatedBackground } from "../components/AnimatedBackground";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 import { useState, useEffect } from "react";
 import { PortfolioModal } from "../components/PortfolioModal";
@@ -6,6 +6,7 @@ import { Language, getTranslation, getLanguageFromStorage, setLanguageToStorage 
 import { ContentBlock } from "../../shared/schema";
 import { AnimatedWaveBackground } from "@/components/AnimatedWaveBackground";
 import { AnimatedLinesBackground } from "@/components/AnimatedLinesBackground";
+import { ParticleWave } from "@/components/ParticleWave";
 
 // Portfolio data
 const portfolioItems = [
@@ -70,6 +71,7 @@ export default function Index() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [language, setLanguage] = useState<Language>('uz');
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const itemsPerPage = 6;
 
   const t = (key: string) => getTranslation(language, key);
@@ -95,6 +97,21 @@ export default function Index() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close language dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.language-dropdown')) {
+        setIsLangDropdownOpen(false);
+      }
+    };
+
+    if (isLangDropdownOpen) {
+      document.addEventListener('click', handleClickOutside);
+    }
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isLangDropdownOpen]);
+
   // Reset to page 1 when category changes
   useEffect(() => {
     setCurrentPage(1);
@@ -108,6 +125,7 @@ export default function Index() {
   const handleLanguageChange = (lang: Language) => {
     setLanguage(lang);
     setLanguageToStorage(lang);
+    setIsLangDropdownOpen(false);
   };
 
   const handlePortfolioClick = (index: number) => {
@@ -178,42 +196,105 @@ export default function Index() {
                 {t('nav.contact')}
               </a>
             </div>
-            {/* Language Flags */}
-            <div className="flex items-center gap-1 sm:gap-2">
-              {/* Uzbek */}
+            {/* Language Dropdown */}
+            <div className="relative language-dropdown">
               <button 
-                onClick={() => handleLanguageChange('uz')}
-                className={`flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg border transition-colors ${
-                  language === 'uz' ? 'bg-white/20 border-white/30' : 'bg-white/5 border-white/10 hover:border-white/20'
-                }`}
+                onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+                className="flex items-center gap-2 px-2 sm:px-3 py-1 sm:py-1.5  transition-colors cursor-pointer"
               >
-                <svg className="w-5 h-4 sm:w-7 sm:h-5" viewBox="0 0 28 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="28" height="21" rx="2" fill="white"/>
-                  <path d="M0 14H28V21H0V14Z" fill="#1EB53A"/>
-                  <path d="M0 0H28V7H0V0Z" fill="#0099B5"/>
-                  <path d="M0 6.71997H28V14.28H0V6.71997Z" fill="#CE1126"/>
-                  <path d="M0 7.13989H28V13.8599H0V7.13989Z" fill="white"/>
-                  <circle cx="5.88" cy="3.36" r="2.52" fill="white"/>
-                  <circle cx="6.72" cy="3.36" r="2.52" fill="#0099B5"/>
-                </svg>
-                <span className="text-white text-xs sm:text-sm uppercase hidden sm:inline">O'z</span>
+                {language === 'uz' && (
+                  <>
+                    <svg className="w-5 h-4 sm:w-7 sm:h-5" viewBox="0 0 28 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="28" height="21" rx="2" fill="white"/>
+                      <path d="M0 14H28V21H0V14Z" fill="#1EB53A"/>
+                      <path d="M0 0H28V7H0V0Z" fill="#0099B5"/>
+                      <path d="M0 6.71997H28V14.28H0V6.71997Z" fill="#CE1126"/>
+                      <path d="M0 7.13989H28V13.8599H0V7.13989Z" fill="white"/>
+                      <circle cx="5.88" cy="3.36" r="2.52" fill="white"/>
+                      <circle cx="6.72" cy="3.36" r="2.52" fill="#0099B5"/>
+                    </svg>
+                    <span className="text-white text-xs sm:text-sm hidden sm:inline">O'Z</span>
+                  </>
+                )}
+                {language === 'ru' && (
+                  <>
+                    <svg className="w-5 h-4 sm:w-7 sm:h-5" viewBox="0 0 28 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="28" height="7" fill="white"/>
+                      <rect y="7" width="28" height="7" fill="#0039A6"/>
+                      <rect y="14" width="28" height="7" fill="#D52B1E"/>
+                    </svg>
+                    <span className="text-white text-xs sm:text-sm hidden sm:inline">RU</span>
+                  </>
+                )}
+                {language === 'en' && (
+                  <>
+                    <svg className="w-5 h-4 sm:w-7 sm:h-5" viewBox="0 0 28 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="28" height="21" rx="2" fill="#012169"/>
+                      <path d="M0 0L28 21M28 0L0 21" stroke="white" strokeWidth="2.8"/>
+                      <path d="M0 0L28 21M28 0L0 21" stroke="#C8102E" strokeWidth="1.4"/>
+                      <path d="M14 0V21M0 10.5H28" stroke="white" strokeWidth="4.67"/>
+                      <path d="M14 0V21M0 10.5H28" stroke="#C8102E" strokeWidth="2.8"/>
+                    </svg>
+                    <span className="text-white text-xs sm:text-sm hidden sm:inline">EN</span>
+                  </>
+                )}
               </button>
 
-              {/* English */}
-              <button 
-                onClick={() => handleLanguageChange('en')}
-                className={`flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg border transition-colors ${
-                  language === 'en' ? 'bg-white/20 border-white/30' : 'bg-white/5 border-white/10 hover:border-white/20'
-                }`}
-              >
-                <svg className="w-5 h-4 sm:w-7 sm:h-5" viewBox="0 0 28 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="28" height="21" rx="2" fill="#012169"/>
-                  <path d="M0 0L28 21M28 0L0 21" stroke="white" strokeWidth="2.8"/>
-                  <path d="M14 0V21M0 10.5H28" stroke="#C8102E" strokeWidth="1.4"/>
-                  <path d="M14 0V21M0 10.5H28" stroke="white" strokeWidth="0.933333"/>
-                </svg>
-                <span className="text-white text-xs sm:text-sm uppercase hidden sm:inline">En</span>
-              </button>
+              {/* Dropdown Menu */}
+              {isLangDropdownOpen && (
+                <div className="absolute top-full right-0 mt-2 py-2 px-1 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md shadow-lg z-50 min-w-[120px]">
+                  {/* Uzbek */}
+                  <button 
+                    onClick={() => handleLanguageChange('uz')}
+                    className={`flex items-center gap-2 w-full px-3 py-2 rounded-lg transition-colors ${
+                      language === 'uz' ? 'bg-white/20' : 'hover:bg-white/10'
+                    }`}
+                  >
+                    <svg className="w-5 h-4 sm:w-7 sm:h-5" viewBox="0 0 28 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="28" height="21" rx="2" fill="white"/>
+                      <path d="M0 14H28V21H0V14Z" fill="#1EB53A"/>
+                      <path d="M0 0H28V7H0V0Z" fill="#0099B5"/>
+                      <path d="M0 6.71997H28V14.28H0V6.71997Z" fill="#CE1126"/>
+                      <path d="M0 7.13989H28V13.8599H0V7.13989Z" fill="white"/>
+                      <circle cx="5.88" cy="3.36" r="2.52" fill="white"/>
+                      <circle cx="6.72" cy="3.36" r="2.52" fill="#0099B5"/>
+                    </svg>
+                    <span className="text-white text-xs sm:text-sm">O'Z</span>
+                  </button>
+
+                  {/* Russian */}
+                  <button 
+                    onClick={() => handleLanguageChange('ru')}
+                    className={`flex items-center gap-2 w-full px-3 py-2 rounded-lg transition-colors ${
+                      language === 'ru' ? 'bg-white/20' : 'hover:bg-white/10'
+                    }`}
+                  >
+                    <svg className="w-5 h-4 sm:w-7 sm:h-5" viewBox="0 0 28 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="28" height="7" fill="white"/>
+                      <rect y="7" width="28" height="7" fill="#0039A6"/>
+                      <rect y="14" width="28" height="7" fill="#D52B1E"/>
+                    </svg>
+                    <span className="text-white text-xs sm:text-sm">RU</span>
+                  </button>
+
+                  {/* English */}
+                  <button 
+                    onClick={() => handleLanguageChange('en')}
+                    className={`flex items-center gap-2 w-full px-3 py-2 rounded-lg transition-colors ${
+                      language === 'en' ? 'bg-white/20' : 'hover:bg-white/10'
+                    }`}
+                  >
+                    <svg className="w-5 h-4 sm:w-7 sm:h-5" viewBox="0 0 28 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="28" height="21" rx="2" fill="#012169"/>
+                      <path d="M0 0L28 21M28 0L0 21" stroke="white" strokeWidth="2.8"/>
+                      <path d="M0 0L28 21M28 0L0 21" stroke="#C8102E" strokeWidth="1.4"/>
+                      <path d="M14 0V21M0 10.5H28" stroke="white" strokeWidth="4.67"/>
+                      <path d="M14 0V21M0 10.5H28" stroke="#C8102E" strokeWidth="2.8"/>
+                    </svg>
+                    <span className="text-white text-xs sm:text-sm">EN</span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -256,7 +337,7 @@ export default function Index() {
       {/* Hero Section */}
       <section id="hero-section" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero pt-16 sm:pt-20">
         {/* Animated Wave Background */}
-        <AnimatedLinesBackground />
+        <ParticleWave />
 
         {/* Hero Content */}
         <div className="relative z-10 w-full max-w-[900px] mx-auto px-4 sm:px-6">
@@ -295,7 +376,34 @@ export default function Index() {
               dangerouslySetInnerHTML={{ __html: block2?.text1_2 || "Quyida mening..." }}
             />
             {block2?.button1Enabled && (
-              <button className="group relative flex items-center gap-2 sm:gap-3 px-6 sm:px-10 py-2 sm:py-3 rounded-[23px] border border-yellow-gold/50 bg-gradient-to-b from-[#FFBD59]/6 to-[#FFBD59]/5 hover:border-yellow-gold transition-all text-sm sm:text-base">
+              <button className="group relative flex items-center gap-2 sm:gap-3 px-6 sm:px-10 py-2 sm:py-3 rounded-[23px] border border-yellow-gold/50 bg-gradient-to-b from-[#FFBD59]/6 to-[#FFBD59]/5 hover:border-yellow-gold transition-all text-sm sm:text-base overflow-visible">
+                {/* Star particles - appear on hover */}
+                <span className="absolute -left-3 -top-3 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110 group-hover:-translate-x-1 group-hover:-translate-y-1">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" fill="#FFD12E"/>
+                  </svg>
+                </span>
+                <span className="absolute -right-2 -top-2 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-75 group-hover:scale-110 group-hover:translate-x-1 group-hover:-translate-y-1">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" fill="#FFD12E"/>
+                  </svg>
+                </span>
+                <span className="absolute -right-3 -bottom-2 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100 group-hover:scale-110 group-hover:translate-x-1 group-hover:translate-y-1">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" fill="#FFD12E"/>
+                  </svg>
+                </span>
+                <span className="absolute -left-2 -bottom-1 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-150 group-hover:scale-110 group-hover:-translate-x-1 group-hover:translate-y-1">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" fill="#FFD12E"/>
+                  </svg>
+                </span>
+                <span className="absolute left-1/2 -top-4 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-50 group-hover:scale-110 group-hover:-translate-y-1">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" fill="#FFD12E"/>
+                  </svg>
+                </span>
+                
                 <svg className="w-4 h-4 sm:w-[18px] sm:h-[18px]" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6.59175 13.5915C6.3829 13.8004 6.13475 13.9664 5.86165 14.0796C5.58855 14.1928 5.29585 14.251 5 14.251C4.70415 14.251 4.41145 14.1928 4.13835 14.0796C3.86525 13.9664 3.6171 13.8004 3.40825 13.5915L1.00025 11.1833C0.871084 11.0404 0.801884 10.8535 0.806834 10.661C0.811784 10.4685 0.890484 10.2853 1.02675 10.1494C1.16302 10.0134 1.34638 9.93501 1.53888 9.93051C1.73138 9.92601 1.91818 9.99551 2.06075 10.125L4.25525 12.3203L4.25 0.75C4.25 0.551088 4.329 0.360322 4.46967 0.21967C4.61033 0.0790178 4.80109 0 5 0C5.19891 0 5.38967 0.0790178 5.53033 0.21967C5.671 0.360322 5.75 0.551088 5.75 0.75L5.75675 12.306L7.93925 10.125C8.07998 9.98436 8.27074 9.90538 8.46975 9.90548C8.66875 9.90558 8.85951 9.98461 9.00013 10.1254C9.14075 10.2661 9.21972 10.4569 9.21962 10.6559C9.21952 10.8548 9.14049 11.0456 8.99975 11.1862L6.59175 13.5915Z" fill="url(#paint0_linear)" />
                   <path d="M0.75 12C0.948912 12 1.13968 12.079 1.28033 12.2197C1.421 12.3603 1.5 12.5511 1.5 12.75V15.75C1.5 15.9489 1.579 16.1397 1.71967 16.2803C1.86032 16.421 2.05109 16.5 2.25 16.5H15.75C15.9489 16.5 16.1397 16.421 16.2803 16.2803C16.421 16.1397 16.5 15.9489 16.5 15.75V12.75C16.5 12.5511 16.579 12.3603 16.7197 12.2197C16.8603 12.079 17.0511 12 17.25 12C17.4489 12 17.6397 12.079 17.7803 12.2197C17.921 12.3603 18 12.5511 18 12.75V15.75C18 16.3467 17.7629 16.919 17.341 17.341C16.919 17.7629 16.3467 18 15.75 18H2.25C1.65326 18 1.08097 17.7629 0.658961 17.341C0.236957 16.919 0 16.3467 0 15.75V12.75C0 12.5511 0.0790178 12.3603 0.21967 12.2197C0.360322 12.079 0.551088 12 0.75 12Z" fill="url(#paint1_linear)" />
@@ -630,7 +738,7 @@ export default function Index() {
       </section>
 
       {/* Footer */}
-      <footer className="py-6 sm:py-8 px-4 sm:px-6 bg-gradient-contact">
+      <footer className="py-6 sm:py-8 px-4 sm:px-6 bg-white">
         <div className="w-full mx-auto py-12 sm:py-16 md:py-[80px] px-6 sm:px-10 md:px-20 lg:px-[120px] bg-purple-light rounded-2xl sm:rounded-[30px]">
           <div className="w-full">
             {/* Footer Content */}
