@@ -254,7 +254,11 @@ export default function Admin() {
   };
 
   const handleUpdate = (blockId: string, field: string, value: any) => {
-    setBlocks(blocks.map(b => b.id === blockId ? { ...b, [field]: value } : b));
+    setBlocks(prev => prev.map(b => b.id === blockId ? { ...b, [field]: value } : b));
+  };
+
+  const handleMultiUpdate = (blockId: string, updates: Record<string, any>) => {
+    setBlocks(prev => prev.map(b => b.id === blockId ? { ...b, ...updates } : b));
   };
 
   const handleNestedUpdate = (blockId: string, arrayField: string, index: number, field: string, value: any) => {
@@ -430,6 +434,130 @@ export default function Admin() {
             {renderInput("Text 1", block.text1, (v) => handleUpdate(block.id, "text1", v))}
             {renderInput("Text 2", block.text2, (v) => handleUpdate(block.id, "text2", v))}
             {renderInput("Text 3", block.text3, (v) => handleUpdate(block.id, "text3", v), true)}
+            
+            <div className="border-t border-dashed my-4"></div>
+            <h4 className="text-sm font-semibold text-gray-500 mb-2">Background (Image or Video)</h4>
+            <p className="text-xs text-gray-400 mb-3">Upload an image or video. If empty, the default animation will be shown.</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-start py-2">
+              <label className="text-sm font-medium text-gray-700 pt-2">Background Media:</label>
+              <div className="md:col-span-3">
+                <div className="flex flex-col gap-3">
+                  {/* Preview */}
+                  {block.backgroundUrl && (
+                    <div className="relative w-full max-w-md rounded-lg overflow-hidden border border-gray-200">
+                      {block.backgroundType === 'video' ? (
+                        <video 
+                          key={block.backgroundUrl}
+                          src={block.backgroundUrl} 
+                          className="w-full h-40 object-cover"
+                          muted={true}
+                          loop={true}
+                          autoPlay={true}
+                          playsInline={true}
+                          controls
+                          onError={(e) => console.error('Video load error:', e)}
+                        >
+                          <source src={block.backgroundUrl} type="video/mp4" />
+                          Your browser does not support video.
+                        </video>
+                      ) : (
+                        <img 
+                          key={block.backgroundUrl}
+                          src={block.backgroundUrl} 
+                          alt="Background preview"
+                          className="w-full h-40 object-cover"
+                          onError={(e) => console.error('Image load error:', e)}
+                        />
+                      )}
+                      <button
+                        onClick={async () => {
+                          // Delete file from server
+                          const urlToDelete = block.backgroundUrl;
+                          if (urlToDelete) {
+                            fetch('/api/delete-file', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ url: urlToDelete })
+                            }).catch(err => console.error('Failed to delete file', err));
+                          }
+                          handleMultiUpdate(block.id, {
+                            backgroundUrl: "",
+                            backgroundType: ""
+                          });
+                        }}
+                        className="absolute top-2 right-2 p-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-md transition-colors"
+                        title="Remove background"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  )}
+                  
+                  {/* Upload Button */}
+                  <label className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg cursor-pointer transition-colors w-fit">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M17 8L12 3L7 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M12 3V15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span>Upload Image or Video</span>
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept="image/*,video/*"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        
+                        const isVideo = file.type.startsWith('video/');
+                        const isImage = file.type.startsWith('image/');
+                        
+                        if (!isVideo && !isImage) {
+                          toast.error('Please upload an image or video file');
+                          return;
+                        }
+                        
+                        try {
+                          // Delete old file from server if exists
+                          const oldUrl = block.backgroundUrl;
+                          if (oldUrl) {
+                            fetch('/api/delete-file', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ url: oldUrl })
+                            }).catch(err => console.error('Failed to delete old file:', err));
+                          }
+                          
+                          const formData = new FormData();
+                          formData.append('file', file);
+                          const res = await fetch('/api/upload', {
+                            method: 'POST',
+                            body: formData
+                          });
+                          if (!res.ok) throw new Error('Upload failed');
+                          const data = await res.json();
+                          // Update both fields in a single state update to avoid stale closure
+                          handleMultiUpdate(block.id, {
+                            backgroundUrl: data.url,
+                            backgroundType: isVideo ? 'video' : 'image'
+                          });
+                          toast.success('Background uploaded successfully');
+                        } catch (err) {
+                          toast.error('Failed to upload file');
+                        }
+                      }}
+                    />
+                  </label>
+                  
+                  {!block.backgroundUrl && (
+                    <p className="text-xs text-gray-500 italic">No background uploaded. Default animation will be shown.</p>
+                  )}
+                </div>
+              </div>
+            </div>
           </>
         );
       case "block2":

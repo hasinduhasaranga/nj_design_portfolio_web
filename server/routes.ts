@@ -91,6 +91,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post("/api/delete-file", (req, res) => {
+    try {
+      const { url } = req.body;
+      if (!url || !url.startsWith('/uploads/')) {
+        return res.status(400).json({ message: "Invalid file URL" });
+      }
+
+      const filename = url.replace('/uploads/', '');
+      const filePath = path.join(uploadDir, filename);
+
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+        res.json({ message: "File deleted successfully" });
+      } else {
+        res.json({ message: "File not found, skipping" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "File deletion failed" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

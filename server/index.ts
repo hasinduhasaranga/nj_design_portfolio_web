@@ -10,8 +10,18 @@ export async function createServer() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   
-  // Serve uploaded files
-  app.use('/uploads', express.static('server/uploads'));
+  // Serve uploaded files with proper MIME types
+  app.use('/uploads', express.static('server/uploads', {
+    setHeaders: (res, path) => {
+      if (path.endsWith('.mp4')) {
+        res.setHeader('Content-Type', 'video/mp4');
+      } else if (path.endsWith('.webm')) {
+        res.setHeader('Content-Type', 'video/webm');
+      } else if (path.endsWith('.mov')) {
+        res.setHeader('Content-Type', 'video/quicktime');
+      }
+    }
+  }));
 
   // Register API routes
   const { registerRoutes } = await import("./routes");
